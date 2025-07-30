@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  zipbomb-test:
+    build: .
+    image: zipbomb-test
+    container_name: zipbomb-test-container
+    mem_limit: 100m
+    cpus: 0.5
+    tmpfs:
+      - /app/extracted:size=50M,mode=1777
+    ulimits:
+      fsize: 52428800  # 50MB file size limit
+      cpu: 30          # 30 seconds CPU time
+      nproc: 50        # limit processes
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    volumes:
+      - type: tmpfs
+        target: /tmp
+        tmpfs:
+          size: 10M
