@@ -3,19 +3,19 @@
 ## Abstract
 
 BitBomb is an educational demonstration that creates archives which appear to contain cryptocurrency wallet databases as a honeypot to be found by agents (be they malware or intruders).
-By using the overlapping file technique with procedurally generated Bitcoin wallet data, it can achieve compression ratios exceeding 1M:1 while maintaining pseudo authenticity in its decoy content.
+By using the overlapping file technique with procedurally generated **fake** Bitcoin wallet data, it can achieve compression ratios exceeding 1M:1 while maintaining pseudo authenticity in its decoy content.
 
 Example File: [bitcoin_wallets.zip](./output/bitcoin_wallets.zip)
 
 ## Research Context
 
-This implementation addresses the growing threat of automated cryptocurrency theft tools that systematically scan systems for wallet files, private keys, and seed phrases. Traditional zipbombs lack domain-specific context, making them easily identifiable to sophisticated malware. BitBomb bridges this gap by creating archives that appear to contain legitimate Bitcoin wallet exports from major exchanges and personal storage systems.
+This implementation addresses the growing threat of automated cryptocurrency theft tools that systematically scan systems for wallet files, private keys, and seed phrases. Traditional zipbombs lack domain-specific context, making them easily identifiable to sophisticated malware. BitBomb bridges this gap by creating archives that appear to contain **simulated** Bitcoin wallet exports from major exchanges and personal storage systems.
 
 ## Technical Implementation
 
 ### Compression Architecture
 
-BitBomb utilizes the overlapping file technique, a variant of the zip bomb methodology first demonstrated in David Fifield's zblg.zip research. The core innovation lies in creating a single compressed "kernel" containing authentic wallet data, then referencing this kernel through multiple central directory entries with unique metadata.
+BitBomb utilizes the overlapping file technique, a variant of the zip bomb methodology first demonstrated in David Fifield's zblg.zip research. The core innovation lies in creating a single compressed "kernel" containing **simulated** wallet data, then referencing this kernel through multiple central directory entries with unique metadata.
 
 **Key Technical Features:**
 - **Kernel Generation**: Creates compressed wallet data with realistic entropy characteristics
@@ -54,6 +54,32 @@ Balance distributions reflect real-world Bitcoin wealth patterns:
 | 487,931 | 47.2 MB | 8.31 TB | 180,299:1 | 2.6 min |
 
 *Estimated on modern SSD with 8GB RAM
+
+## Archive Structure
+
+The generated archive contains CSV files organized in a realistic directory structure:
+
+```
+bitcoin_wallets.zip
+├── coinbase_backup/2021-04/daily_export_28/addresses_797b37.csv
+├── exchange_exports/binance/2021/month_10/wallets_20211004_92ed3b5f.csv
+├── high_value_wallets/whale_addresses_2021/verified_74a02cce.csv
+├── kraken/withdrawals/2021/week_01/batch_ba9d3328.csv
+└── regions/asia/singapore/exchange_data/202002_6eb512.csv
+```
+
+### Sample CSV Content
+
+Each CSV file contains **simulated** wallet data with the following structure (note: these are fake credentials with no real Bitcoin value):
+
+```csv
+address,seed_phrase,private_key,balance_btc,created_date
+12428bb4e23ae79012eeb23511cfe82118,abstract all art appear acid able ancient able action allow all accident,289701e3bb76e8646f3af5b5b17bd4ca13f56f63cc46cef317fad889fe54e6c9,0.00001553,2024-07-26
+135db0588a67405cd51c33630271f4ca50,aim announce air actress already adult alien ask account asset apart again,35fe8801fbfbeb62bf7d81b2184c62c3554ab16bf1249e1adc030c06e5380820,0.00000000,2024-05-25
+34b17363254d235330615e231fbe29e534,anchor alcohol adjust apart always argue agent above assume arrow appear attack,28d4d0ca734f2e426a17e1816a753352c909a97782e7c8f74c36fa259fb2cfdf,0.00000000,2023-02-09
+bc1qa15017433b0c16595953a2c863f9c5f6b26970,absorb argue acquire amazing athlete april among absurd absorb auction aerobic attend,88eee0ea680dac02979541c873af9d37a7e39a788362988d625e59be4399f3f8,72.20071261,2022-09-04
+34c0156d1efe878e3ec51dc38ecbfe5967,adult acoustic alpha absorb aim artist accuse alter approve alpha actress arctic,474d98fb50521e63d0ad66eb50253737316c00882b6e0296d4b84e8197c6d42c,0.00000000,2022-10-21
+```
 
 ## Usage Parameters
 
